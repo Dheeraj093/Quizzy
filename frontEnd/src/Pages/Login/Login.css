@@ -1,0 +1,135 @@
+
+.login{
+    height: 80vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login-left{
+    height: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-right{
+    display: none;
+}
+.loginImg{
+    display: none;
+}
+
+.login .form{
+    height: 60%;
+    width: 100%;
+    display:flex;
+    flex-direction: column;
+    justify-content:center; 
+    align-items: center;
+    gap: 10px; 
+}
+
+.inputFeild{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+}
+.login label{
+    font-size: 15px;
+    font-weight: 600;
+    color:#015D53;
+}
+.login-password-input{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1.9px solid #015D53;
+}
+
+.login input{
+   width: 80%;
+   outline: none;
+   height: 25px;
+   font-size: 15px;
+   font-weight: 500;
+   color: #015D53;
+   border: none;
+}
+.login input::placeholder{
+    color:#60938085;
+}
+
+.login input::selection {
+    background-color: #ffffff; 
+    color: #015D53; 
+  }
+
+  /* Target Chrome autofill */
+  .login input:-webkit-autofill {
+    background-color: #ffffff !important;
+    color: #015D53 !important;
+    -webkit-text-fill-color: #015D53 !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+.signin{
+    width:80%;
+    height: 25px;
+    border:none;
+    cursor: pointer;
+    border-radius: 40px;
+    font-size: 15px;
+    color:#015D53;
+    background-color: #09cf89;
+}
+.signin:hover{
+    color:rgb(240, 239, 239);
+    background-color: #015D53;
+}
+.icon-for-show-password{
+    width: 10%;
+    font-size: 15px;
+    color:#015D53;
+}
+@media  screen and (min-width:768px) {
+    .login-left{
+        width: 50%;
+        height: 100%;
+        border-right: 1.9px solid #09cf89;
+    }
+    
+    .login-right{
+        display: block;
+        width: 50%;
+    }
+    .loginImg{
+        display: block;
+    }
+    .login .form{
+        height: 60%;
+        width: 100%;
+        gap: 5px; 
+    }
+    .inputFeild{
+        width: 70%;
+    }
+    .login label{
+        font-size: 25px;
+    }
+    .login input{
+
+        height: 25px;
+        font-size: 20px;
+     }
+    .signin{
+        margin-top: 25px;
+        width:70%;
+        height: 35px;
+        font-size: 25px;
+    }
+    .icon-for-show-password{
+        font-size: 20px;
+    }
+}
