@@ -201,7 +201,9 @@
     background-color: #015D53;
 
     >h1 {
-
+        display: flex;
+        justify-content: center;
+        align-items: center;
         color: #015D53;
         background-color: #FFE77AFF;
     }
