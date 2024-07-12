@@ -26,7 +26,7 @@ const Login = () => {
 
       try {
         if(userCredetial.email !=="" && userCredetial.password !==""){
-          const userInfo = await axios.post('http://localhost:8000/user/signin', userCredetial);
+          const userInfo = await axios.post('https://quizzy-shja.onrender.com/user/signin', userCredetial);
           setAccount(userInfo?.data);
           localStorage.setItem('token', userInfo?.data?.token); // new added line
           navigate('/protected/home');

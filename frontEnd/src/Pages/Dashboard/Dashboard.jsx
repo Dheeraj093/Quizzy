@@ -25,8 +25,8 @@ const Dashboard = () => {
             const token = localStorage.getItem('token'); 
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`; 
             axios.defaults.withCredentials = true;
-            const res1 = await axios.get('http://localhost:8000/studentRecord/myRecords') 
-            const res2 = await axios.get('http://localhost:8000/quiz/myQuizzes') 
+            const res1 = await axios.get('https://quizzy-shja.onrender.com/studentRecord/myRecords') 
+            const res2 = await axios.get('https://quizzy-shja.onrender.com/quiz/myQuizzes') 
             setMyRecord(res1?.data);
             setQuizPer(res1?.data?.quizPer);
             setMyQuizzes(res2?.data?.myAllQuiz);

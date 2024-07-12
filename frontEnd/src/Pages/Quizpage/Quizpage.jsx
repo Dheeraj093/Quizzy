@@ -37,7 +37,7 @@ const Quizpage = () => {
         try {
             const id = state?.data?.id;
             // console.log("id:",id);
-            const res = await axios.post("http://localhost:8000/quiz/quizById",{quizID:state?.data?.id}); 
+            const res = await axios.post("https://quizzy-shja.onrender.com/quiz/quizById",{quizID:state?.data?.id}); 
             // console.log("res",res);
             setQuestions(res?.data?.newQuiz?.questions);
             setDuration(res?.data?.newQuiz?.duration);
@@ -64,10 +64,10 @@ const Quizpage = () => {
       alert('Quiz submitted!');
       const notAns = questions?.length - rightQ - wrongQ;
       if(duration !== 0){
-        await axios.post("http://localhost:8000/studentRecord/addStudentRecord",{quizID:state?.data?.id,username:account?.username,marks:marks,totalMarks:`${marksPerQues>0 ? questions?.length*marksPerQues : questions?.length*1}`, right:rightQ, wrong:wrongQ, notAnswered: notAns,timeTaken:`${duration*60 - elapsedTime}`});
+        await axios.post("https://quizzy-shja.onrender.com/studentRecord/addStudentRecord",{quizID:state?.data?.id,username:account?.username,marks:marks,totalMarks:`${marksPerQues>0 ? questions?.length*marksPerQues : questions?.length*1}`, right:rightQ, wrong:wrongQ, notAnswered: notAns,timeTaken:`${duration*60 - elapsedTime}`});
       } 
       else{
-         await axios.post("http://localhost:8000/studentRecord/addStudentRecord",{quizID:state?.data?.id,username:account?.username,marks:marks,totalMarks:`${marksPerQues>0 ? questions?.length*marksPerQues : questions?.length*1}`,right:rightQ, wrong:wrongQ, notAnswered: notAns,});
+         await axios.post("https://quizzy-shja.onrender.com/studentRecord/addStudentRecord",{quizID:state?.data?.id,username:account?.username,marks:marks,totalMarks:`${marksPerQues>0 ? questions?.length*marksPerQues : questions?.length*1}`,right:rightQ, wrong:wrongQ, notAnswered: notAns,});
       }
       navigate("/protected/result",{state:{marks:marks,totalMarks:`${marksPerQues>0 ? questions?.length*marksPerQues : questions?.length*1}`}})
     } catch (error) {
@@ -85,7 +85,7 @@ const Quizpage = () => {
       try {
         alert('Time is up! Submitting your quiz.');
          const notAns = questions?.length - rightQ - wrongQ;
-         await axios.post("http://localhost:8000/studentRecord/addStudentRecord",{quizID:state?.data?.id,username:account?.username,marks:marks,totalMarks:`${marksPerQues>0 ? questions?.length*marksPerQues : questions?.length*1}`, right:rightQ, wrong:wrongQ, notAnswered: notAns,timeTaken:`${duration*60}`});
+         await axios.post("https://quizzy-shja.onrender.com/studentRecord/addStudentRecord",{quizID:state?.data?.id,username:account?.username,marks:marks,totalMarks:`${marksPerQues>0 ? questions?.length*marksPerQues : questions?.length*1}`, right:rightQ, wrong:wrongQ, notAnswered: notAns,timeTaken:`${duration*60}`});
          navigate("/protected/result",{state:{marks:marks,totalMarks:`${marksPerQues>0 ? questions?.length*marksPerQues : questions?.length*1}`}})
       } catch (error) {
         if(error?.response && error?.response?.status===400)

@@ -17,7 +17,7 @@ const Signup = () => {
      try {
       if(userInfo.username !=="" && userInfo.email !=="" ){
          if(userInfo?.password.length >= 8){
-                const res = await axios.post('http://localhost:8000/user/otpVerify',userInfo);
+                const res = await axios.post('https://quizzy-shja.onrender.com/user/otpVerify',userInfo);
                 console.log("res",res);
                 toast.success(res?.data?.message);
                 userInfo.otp = "";
@@ -44,7 +44,7 @@ const Signup = () => {
             if(userInfo.username !=="" && userInfo.email !=="" ){
                if(userInfo?.password.length >= 8){
                   if(userInfo.otp !==''){
-                     await axios.post('http://localhost:8000/user/signup', userInfo);
+                     await axios.post('https://quizzy-shja.onrender.com/user/signup', userInfo);
                      toast.success("Registration Successful!");
                      navigate('/login');
                   }

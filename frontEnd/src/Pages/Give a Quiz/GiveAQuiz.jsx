@@ -38,7 +38,7 @@ const GiveAQuiz = () => {
         const token = localStorage.getItem('token'); 
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         if(numberOfQuestions!=='' && selectedTopics.length>0){
-          const response = await axios.post('http://localhost:8000/quiz/giveQuiz', {
+          const response = await axios.post('https://quizzy-shja.onrender.com/quiz/giveQuiz', {
             count:numberOfQuestions,
             topics: selectedTopics,
           });

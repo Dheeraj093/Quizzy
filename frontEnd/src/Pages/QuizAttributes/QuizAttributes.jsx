@@ -89,7 +89,7 @@ const QuizAttributes = () => {
               }
               const token = localStorage.getItem('token'); 
               axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-              const res = await axios.post('http://localhost:8000/quiz/createQuiz',questionWithAtt);
+              const res = await axios.post('https://quizzy-shja.onrender.com/quiz/createQuiz',questionWithAtt);
               const data = {quizID:res?.data?.quizID}
               navigate('/protected/quiz-ID',{replace:true,state:{data}});
             }

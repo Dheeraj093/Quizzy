@@ -15,7 +15,7 @@ const CreateQuiz = () => {
             try {
                 const token = localStorage.getItem('token'); // new added lines
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`; // new added lines
-                const res = await axios.get("http://localhost:8000/question/getAllQuestionforPrepration");
+                const res = await axios.get("https://quizzy-shja.onrender.com/question/getAllQuestionforPrepration");
                 setAllQuestion(res?.data?.allQuestion)
                 setFilteredQuestion(res?.data?.allQuestion)
                 setTopics(res?.data?.topics)

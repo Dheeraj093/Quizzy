@@ -17,7 +17,7 @@ const ResultOfQuiz = () => {
         try {
             const token = localStorage.getItem('token'); 
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            const res = await axios.post("http://localhost:8000/studentRecord/resultOfQuiz",{quizID:state?.quiz?._id});
+            const res = await axios.post("https://quizzy-shja.onrender.com/studentRecord/resultOfQuiz",{quizID:state?.quiz?._id});
             setResultList(res?.data?.list);
         } catch (error) {
           if(error?.response && error?.response?.status===400)

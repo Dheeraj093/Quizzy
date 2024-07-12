@@ -42,7 +42,7 @@ const AddQuestion = () => {
         else if(type === 'mrq' && questionContent.answer.length == 1){
           questionContent.type = 'mcq';
         }
-        const res = await axios.post("http://localhost:8000/question/addQuestion",questionContent);
+        const res = await axios.post("https://quizzy-shja.onrender.com/question/addQuestion",questionContent);
         toast.success("Your Question Successfully added")
         navigate("/protected/home");
       }
