@@ -14,8 +14,7 @@ import { connection } from "./Utils/connection.js";
 dotenv.config();
 const app = express();
 const option = {
-  // origin: ['http://localhost:3000', 'https://quizzy-pied.vercel.app'],
-  origin : 'http://localhost:3000',
+  origin: ['http://localhost:3000', 'https://quizzy-pied.vercel.app'],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true 
 }
