@@ -4,6 +4,7 @@ import { TopicCard } from '../../Components/TopicCard/TopicCard';
 import {QuestionCard} from '../../Components/QuestionCard/QuestionCard';
 import axios from 'axios';
 import { ChartsLegend } from '@mui/x-charts/ChartsLegend';
+import { axiosInstance } from "../../utils/axoisConfig";
 
 const CreateQuiz = () => {
     const [allQuestion, setAllQuestion] = useState([]);
@@ -14,8 +15,9 @@ const CreateQuiz = () => {
         const fetch = async()=>{
             try {
                 const token = localStorage.getItem('token'); // new added lines
-                axios.defaults.headers.common['Authorization'] = `Bearer ${token}`; // new added lines
-                const res = await axios.get("https://quizzy-shja.onrender.com/question/getAllQuestionforPrepration");
+                // console.log(token)
+                axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`; // new added lines
+                const res = await axiosInstance.get("/question/getAllQuestionforPrepration");
                 setAllQuestion(res?.data?.allQuestion)
                 setFilteredQuestion(res?.data?.allQuestion)
                 setTopics(res?.data?.topics)
@@ -83,7 +85,7 @@ export default CreateQuiz;
 //             try {
 //                 const token = localStorage.getItem('token'); // new added lines
 //                 // Set authorization header for Axios requests
-//                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`; // new added lines
+//                 ['Authorization'] = `Bearer ${token}`; // new added lines
 //                 const res = await axios.get("http://localhost:8000/question/getAllQuestionforPrepration");
 //                 // console.log("response ",res);
 //                 console.log("response ",res?.data);

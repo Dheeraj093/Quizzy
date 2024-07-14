@@ -5,6 +5,7 @@ import { userContext } from "../../Context/Context";
 import { useNavigate } from "react-router-dom";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { toast } from "react-toastify";
+import { axiosInstance } from "../../utils/axoisConfig";
 
 const Login = () => {
 
@@ -22,11 +23,12 @@ const Login = () => {
 
   const handleSubmit = async(event) =>{
       event.preventDefault();
-      console.log(userCredetial)
+      // console.log(userCredetial)
 
       try {
         if(userCredetial.email !=="" && userCredetial.password !==""){
-          const userInfo = await axios.post('https://quizzy-shja.onrender.com/user/signin', userCredetial);
+          const userInfo = await axiosInstance.post('/user/signin', userCredetial);
+          console.log(userInfo?.data.token)
           setAccount(userInfo?.data);
           localStorage.setItem('token', userInfo?.data?.token); // new added line
           navigate('/protected/home');

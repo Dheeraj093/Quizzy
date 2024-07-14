@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "./QuizQuestionCard.css"
-const QuizQuestionCard = ({quesObj, ansMap, setAnsMap, marks, rightQ, setRightQ, wrongQ, setWrongQ, setMarks, marksPerQues, negMarksPerQues}) => {
+const QuizQuestionCard = ({quesObj,index, ansMap, setAnsMap, marks, rightQ, setRightQ, wrongQ, setWrongQ, setMarks, marksPerQues, negMarksPerQues}) => {
   console.log(quesObj)
   const [valueOfInput,setValueOfInput] = useState('');
   useEffect(()=>{
@@ -144,7 +144,7 @@ const QuizQuestionCard = ({quesObj, ansMap, setAnsMap, marks, rightQ, setRightQ,
   return (
     <div className='question-container'>
        <div className='question-box'>
-         Q : {quesObj?.question}
+         Q {index+1} : {quesObj?.question}
        </div>
        <div className='options-box'>
          {

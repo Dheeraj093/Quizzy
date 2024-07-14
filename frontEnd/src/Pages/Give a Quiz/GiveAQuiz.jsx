@@ -5,6 +5,7 @@ import axios from 'axios';
 import { TiDelete } from "react-icons/ti";
 import './GiveAQuiz.css'; 
 import { toast } from 'react-toastify';
+import { axiosInstance } from "../../utils/axoisConfig";
 const GiveAQuiz = () => {
   
   const [numberOfQuestions, setNumberOfQuestions] = useState('');
@@ -36,9 +37,9 @@ const GiveAQuiz = () => {
     const handleFetchQuestions = async () => {
       try {
         const token = localStorage.getItem('token'); 
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         if(numberOfQuestions!=='' && selectedTopics.length>0){
-          const response = await axios.post('https://quizzy-shja.onrender.com/quiz/giveQuiz', {
+          const response = await axiosInstance.post('/quiz/giveQuiz', {
             count:numberOfQuestions,
             topics: selectedTopics,
           });

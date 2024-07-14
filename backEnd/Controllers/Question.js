@@ -27,7 +27,8 @@ export const addQuestion = async(req, res) =>{
 export const getAllQuestionforPrepration = async(req, res) => {
     try {
        const userID = req.body.userID;
-       const allQuestion = await Question.find({creatorID : {$ne:userID}});
+       const twelveHoursAgo = new Date(Date.now() - 12 * 60 * 60 * 1000);
+       const allQuestion = await Question.find({createdAt: { $lt: twelveHoursAgo }});
        allQuestion.sort((a,b)=>{
 
             if(a.topic.toLowerCase() < b.topic.toLowerCase())
@@ -59,17 +60,16 @@ export const getAllQuestion = async(req, res) => {
               topics.push(obj?.topic?.toLowerCase());
            }
        })
-       allQuestion.sort((a,b)=>{
-          if(a.creatorID.toString() === userID && b.creatorID.toString() !== userID){
-             return -1;
-          }
-          else if(a.creatorID.toString() !== userID && b.creatorID.toString() === userID){
-             return 1;
-          }
-          else{
-             return 0;
-          }
-       })
+         allQuestion.sort((a, b) => {
+      if (a.creatorID.toString() === userID && b.creatorID.toString() !== userID) {
+        return -1;
+      } else if (a.creatorID.toString() !== userID && b.creatorID.toString() === userID) {
+        return 1;
+      } else {
+        return b.createdAt - a.createdAt; // Sort by createdAt in descending order
+      }
+    });
+
        res.status(200).json({allQuestion : allQuestion,topics:topics});
     } catch (error) {
        res.status(400).json({message : error.message});

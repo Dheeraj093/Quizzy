@@ -7,6 +7,7 @@ import './QuizAttributes.css';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useLocation, useNavigate} from 'react-router-dom';
+import { axiosInstance } from "../../utils/axoisConfig";
 
 const QuizAttributes = () => {
     const [startDate, setStartDate] = useState(new Date());
@@ -88,8 +89,8 @@ const QuizAttributes = () => {
                 }
               }
               const token = localStorage.getItem('token'); 
-              axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-              const res = await axios.post('https://quizzy-shja.onrender.com/quiz/createQuiz',questionWithAtt);
+              axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+              const res = await axiosInstance.post('/quiz/createQuiz',questionWithAtt);
               const data = {quizID:res?.data?.quizID}
               navigate('/protected/quiz-ID',{replace:true,state:{data}});
             }

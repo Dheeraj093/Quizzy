@@ -7,6 +7,7 @@ import { ChartsLegend } from '@mui/x-charts/ChartsLegend';
 import { SelectQuestionCard } from '../../Components/SelectQuestionCard/SelectQuestionCard';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { axiosInstance } from "../../utils/axoisConfig"
 
 const CreateQuiz = () => {
     const [allQuestion, setAllQuestion] = useState([]);
@@ -20,8 +21,8 @@ const CreateQuiz = () => {
         const fetch = async()=>{
             try {
                 const token = localStorage.getItem('token'); // new added lines
-                axios.defaults.headers.common['Authorization'] = `Bearer ${token}`; // new added lines
-                const res = await axios.get("https://quizzy-shja.onrender.com/question/getAllQuestion");
+                axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`; // new added lines
+                const res = await axiosInstance.get("/question/getAllQuestion");
                 setAllQuestion(res?.data?.allQuestion)
                 setFilteredQuestion(res?.data?.allQuestion)
                 setTopics(res?.data?.topics)
@@ -76,7 +77,9 @@ const CreateQuiz = () => {
                 }   
                 {
                     selectedQuestions.length>0 ?(
-                        <div className='quiz-generate-button'><button className='generate-button' onClick={handleOnClick}>Generate Quiz</button></div>
+                            <div className='quiz-generate-button'>
+                                <button className='generate-button' onClick={handleOnClick}>Generate Quiz</button>
+                            </div>
                     ):(
                         <></>
                     )

@@ -20,7 +20,7 @@ const Navbar = () => {
             <li className="nav-list-item"> <Link to="/protected/createQuiz" >Create Quiz</Link> </li>
             {
               account ? (
-                <Link to='/protected/dashboard'><FaUserCircle className='profileIcon'/></Link>
+                <Link to='/protected/dashboard'> {account.picture? <img className='profile-pic' src={account.picture}/>: <FaUserCircle className='profileIcon'/>}</Link>
               ) : (
                 <>
                    <li className="nav-list-item"> <Link className="btn" to="/login">Log in</Link> </li>

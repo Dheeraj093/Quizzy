@@ -6,7 +6,7 @@ import QuizQuestionCard from '../../Components/QuizQuestionCard/QuizQuestionCard
 import { userContext } from '../../Context/Context';
 import { toast } from 'react-toastify';
 import Timer from '../../Components/QuizTimer/Timer';
-
+import { axiosInstance } from "../../utils/axoisConfig";
 
 const Quizpage = () => {
   const {state} = useLocation();
@@ -24,20 +24,20 @@ const Quizpage = () => {
    
   const navigate = useNavigate();
   const token = localStorage.getItem('token'); 
-  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`; 
+  axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`; 
   
   // for timer
   const time = new Date();
   time.setSeconds(time.getSeconds() + duration*60);
   //
-  
+  console.log(ansMap)
   
   useEffect(()=>{
      const fetch = async() =>{
         try {
             const id = state?.data?.id;
             // console.log("id:",id);
-            const res = await axios.post("https://quizzy-shja.onrender.com/quiz/quizById",{quizID:state?.data?.id}); 
+            const res = await axiosInstance.post("/quiz/quizById",{quizID:state?.data?.id}); 
             // console.log("res",res);
             setQuestions(res?.data?.newQuiz?.questions);
             setDuration(res?.data?.newQuiz?.duration);
@@ -64,10 +64,10 @@ const Quizpage = () => {
       alert('Quiz submitted!');
       const notAns = questions?.length - rightQ - wrongQ;
       if(duration !== 0){
-        await axios.post("https://quizzy-shja.onrender.com/studentRecord/addStudentRecord",{quizID:state?.data?.id,username:account?.username,marks:marks,totalMarks:`${marksPerQues>0 ? questions?.length*marksPerQues : questions?.length*1}`, right:rightQ, wrong:wrongQ, notAnswered: notAns,timeTaken:`${duration*60 - elapsedTime}`});
+        await axiosInstance.post("/studentRecord/addStudentRecord",{quizID:state?.data?.id,username:account?.username,marks:marks,totalMarks:`${marksPerQues>0 ? questions?.length*marksPerQues : questions?.length*1}`, right:rightQ, wrong:wrongQ, notAnswered: notAns,timeTaken:`${duration*60 - elapsedTime}`});
       } 
       else{
-         await axios.post("https://quizzy-shja.onrender.com/studentRecord/addStudentRecord",{quizID:state?.data?.id,username:account?.username,marks:marks,totalMarks:`${marksPerQues>0 ? questions?.length*marksPerQues : questions?.length*1}`,right:rightQ, wrong:wrongQ, notAnswered: notAns,});
+         await axiosInstance.post("/studentRecord/addStudentRecord",{quizID:state?.data?.id,username:account?.username,marks:marks,totalMarks:`${marksPerQues>0 ? questions?.length*marksPerQues : questions?.length*1}`,right:rightQ, wrong:wrongQ, notAnswered: notAns,});
       }
       navigate("/protected/result",{state:{marks:marks,totalMarks:`${marksPerQues>0 ? questions?.length*marksPerQues : questions?.length*1}`}})
     } catch (error) {
@@ -85,7 +85,7 @@ const Quizpage = () => {
       try {
         alert('Time is up! Submitting your quiz.');
          const notAns = questions?.length - rightQ - wrongQ;
-         await axios.post("https://quizzy-shja.onrender.com/studentRecord/addStudentRecord",{quizID:state?.data?.id,username:account?.username,marks:marks,totalMarks:`${marksPerQues>0 ? questions?.length*marksPerQues : questions?.length*1}`, right:rightQ, wrong:wrongQ, notAnswered: notAns,timeTaken:`${duration*60}`});
+         await axiosInstance.post("/studentRecord/addStudentRecord",{quizID:state?.data?.id,username:account?.username,marks:marks,totalMarks:`${marksPerQues>0 ? questions?.length*marksPerQues : questions?.length*1}`, right:rightQ, wrong:wrongQ, notAnswered: notAns,timeTaken:`${duration*60}`});
          navigate("/protected/result",{state:{marks:marks,totalMarks:`${marksPerQues>0 ? questions?.length*marksPerQues : questions?.length*1}`}})
       } catch (error) {
         if(error?.response && error?.response?.status===400)
@@ -105,7 +105,7 @@ const Quizpage = () => {
                 {
                 questions?.length && (
                         questions?.map((question,index)=>{
-                            return  <div className='question-pointer' onClick={() => setQuestionIndex(index)}>{index+1}</div>
+                            return  ansMap.has(question._id)?<div className='question-pointer-attempted' onClick={() => setQuestionIndex(index)}>{index+1}</div> : <div className='question-pointer' onClick={() => setQuestionIndex(index)}>{index+1}</div>   //change color for attempted ques
                         })
                 )
                 }
@@ -129,6 +129,7 @@ const Quizpage = () => {
            
            <QuizQuestionCard 
              quesObj={questions[questionIndex]} 
+             index={questionIndex}
              ansMap={ansMap}  
              setAnsMap={setAnsMap} 
              marks={marks} 

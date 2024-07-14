@@ -12,6 +12,7 @@ import { FaEdit } from "react-icons/fa";
 import { TbLogout } from "react-icons/tb";
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { axiosInstance } from "../../utils/axoisConfig";
 const Dashboard = () => {
 
   const {account,setAccount} = useContext(userContext);
@@ -23,10 +24,11 @@ const Dashboard = () => {
     const fetch = async()=>{
         try {
             const token = localStorage.getItem('token'); 
-            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`; 
+            console.log(token)
+            axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`; 
             axios.defaults.withCredentials = true;
-            const res1 = await axios.get('https://quizzy-shja.onrender.com/studentRecord/myRecords') 
-            const res2 = await axios.get('https://quizzy-shja.onrender.com/quiz/myQuizzes') 
+            const res1 = await axiosInstance.get('/studentRecord/myRecords') 
+            const res2 = await axiosInstance.get('/quiz/myQuizzes') 
             setMyRecord(res1?.data);
             setQuizPer(res1?.data?.quizPer);
             setMyQuizzes(res2?.data?.myAllQuiz);

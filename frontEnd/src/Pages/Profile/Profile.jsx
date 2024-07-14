@@ -5,7 +5,7 @@ import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { userContext } from '../../Context/Context';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-
+import { axiosInstance } from "../../utils/axoisConfig";
 
 const Profile = () => {
   const {account, setAccount} = useContext(userContext);
@@ -27,7 +27,7 @@ const Profile = () => {
     formData.append('email', account?.email);
  
     try {
-       const res = await axios.post('https://quizzy-shja.onrender.com/user/upload', formData, {
+       const res = await axiosInstance.post('/user/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -43,7 +43,7 @@ const Profile = () => {
  
   const handleUserUpdate =async()=>{
     try {
-        const res = await axios.post("https://quizzy-shja.onrender.com/user/updateUsername",{userName:userName});
+        const res = await axiosInstance.post("/user/updateUsername",{userName:userName});
         toast.success("Username updated!");
         setAccount({...account,username:userName});
     } catch (error) {
@@ -58,7 +58,7 @@ const Profile = () => {
     try {
         if(confirmPass===newPass){
             if(confirmPass.length>8){
-               await axios.post("https://quizzy-shja.onrender.com/user/updatePassword",{oldPass,newPass,confirmPass});
+               await axiosInstance.post("/user/updatePassword",{oldPass,newPass,confirmPass});
                toast.success("Password updated!");
                setNewPass('');
                setOldPass('');

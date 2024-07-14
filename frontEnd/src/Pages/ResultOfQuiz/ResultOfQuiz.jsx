@@ -6,6 +6,7 @@ import 'jspdf-autotable';
 import "./ResultOfQuiz.css"
 import ResultListItem from '../../Components/ResultListItem/ResultListItem';
 import { toast } from 'react-toastify';
+import { axiosInstance } from "../../utils/axoisConfig";
 
 import { TbArrowsSort } from "react-icons/tb";
 
@@ -16,8 +17,8 @@ const ResultOfQuiz = () => {
      const fetch = async() =>{
         try {
             const token = localStorage.getItem('token'); 
-            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            const res = await axios.post("https://quizzy-shja.onrender.com/studentRecord/resultOfQuiz",{quizID:state?.quiz?._id});
+            axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            const res = await axiosInstance.post("/studentRecord/resultOfQuiz",{quizID:state?.quiz?._id});
             setResultList(res?.data?.list);
         } catch (error) {
           if(error?.response && error?.response?.status===400)

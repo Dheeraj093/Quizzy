@@ -3,6 +3,7 @@ import './AddQuestion.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { axiosInstance } from "../../utils/axoisConfig";
 const AddQuestion = () => {
 
 
@@ -22,7 +23,7 @@ const AddQuestion = () => {
   const addQuestion = async() =>{
     try {
       const token = localStorage.getItem('token'); 
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       
       const ansArray = answer.split(",");
       const newArray = ansArray.map(str => str.trim());
@@ -42,7 +43,7 @@ const AddQuestion = () => {
         else if(type === 'mrq' && questionContent.answer.length == 1){
           questionContent.type = 'mcq';
         }
-        const res = await axios.post("https://quizzy-shja.onrender.com/question/addQuestion",questionContent);
+        const res = await axiosInstance.post("/question/addQuestion",questionContent);
         toast.success("Your Question Successfully added")
         navigate("/protected/home");
       }
@@ -65,7 +66,7 @@ const AddQuestion = () => {
      <div className='addQuestion-container'>
         <div className='type-of-ques'>
                 <div className='type-1 type-of-question' onClick={()=>{setType('mcq');setOptions([]);setAnswer('');setTopic('')}}>MCQ</div>
-                <div className='type-2 type-of-question' onClick={()=>{setType('mrq');setOptions([]);setAnswer('');setTopic('')}}>MRQ</div>
+                <div className='type-2 type-of-question' onClick={()=>{setType('mrq');setOptions([]);setAnswer('');setTopic('')}}>MSQ</div>
                 <div className='type-3 type-of-question' onClick={()=>{setType('TF');setOptions([]);setAnswer('');setTopic('')}}>True-False</div>
                 <div className='type-4 type-of-question' onClick={()=>{setType('fill');setOptions([]);setAnswer('');setTopic('')}}>Short Ans</div>
         </div>

@@ -4,6 +4,7 @@ import './Signup.css';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
+import { axiosInstance } from "../../utils/axoisConfig";
 
 
 const Signup = () => {
@@ -17,7 +18,7 @@ const Signup = () => {
      try {
       if(userInfo.username !=="" && userInfo.email !=="" ){
          if(userInfo?.password.length >= 8){
-                const res = await axios.post('https://quizzy-shja.onrender.com/user/otpVerify',userInfo);
+                const res = await axiosInstance.post('/user/otpVerify',userInfo);
                 console.log("res",res);
                 toast.success(res?.data?.message);
                 userInfo.otp = "";
@@ -44,7 +45,7 @@ const Signup = () => {
             if(userInfo.username !=="" && userInfo.email !=="" ){
                if(userInfo?.password.length >= 8){
                   if(userInfo.otp !==''){
-                     await axios.post('https://quizzy-shja.onrender.com/user/signup', userInfo);
+                     await axiosInstance.post('/user/signup', userInfo);
                      toast.success("Registration Successful!");
                      navigate('/login');
                   }
