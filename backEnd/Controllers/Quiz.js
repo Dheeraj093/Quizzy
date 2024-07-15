@@ -158,8 +158,11 @@ export const quizById = async(req, res) =>{
       const quiz = await Quiz.findOne({_id : quizID});
       
       if(quiz){
-         if(quiz?.startTime && quiz.startTime<new Date() && quiz?.endTime && quiz?.endTime <= new Date()){
-            throw new Error("Quiz is not available");
+         if(quiz?.startTime && quiz.startTime>new Date() ){
+            throw new Error(`The quiz will start at ${quiz?.startTime}`);
+         }
+         else if(quiz?.endTime && quiz?.endTime <= new Date()){
+            throw new Error(`The quiz is over at ${quiz?.endTime}`);
          }
          else{
             // console.log("it is available");
